@@ -1,0 +1,142 @@
+:root {
+  color-scheme: light;
+}
+body {
+  width: 320px;
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: #fdfdff;
+  color: #1a1a1a;
+}
+header {
+  padding: 12px 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.brand {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #94a3b8;
+}
+.title {
+  font-weight: 650;
+  font-size: 14px;
+}
+.subtitle {
+  font-size: 11px;
+  color: #64748b;
+}
+.connection-status {
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.35;
+  background: #f8fafc;
+  color: #334155;
+}
+.connection-status--ok {
+  background: #ecfdf5;
+  color: #065f46;
+}
+.connection-status--warn {
+  background: #fffbeb;
+  color: #92400e;
+}
+main {
+  padding: 12px 14px 8px;
+}
+h2 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+.domain-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr auto;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+.bar {
+  height: 8px;
+  border-radius: 999px;
+  background: #fce5c0;
+  overflow: hidden;
+}
+.bar-inner {
+  height: 100%;
+  border-radius: 999px;
+  background: #f28500;
+}
+.meta {
+  color: #64748b;
+  font-variant-numeric: tabular-nums;
+}
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  color: #334155;
+}
+footer {
+  padding: 10px 14px 12px;
+  border-top: 1px solid #e5e7eb;
+}
+button {
+  width: 100%;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-primary {
+  border: none;
+  background: #f28500;
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+.btn-primary:hover {
+  background: #d97706;
+}
+.btn-primary:active {
+  transform: translateY(1px);
+}
+.disclaimer {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.4;
+}
+.get-app-wrap {
+  margin: 6px 0 0;
+}
+.get-app-link {
+  font-size: 11px;
+  color: #64748b;
+  text-decoration: none;
+}
+.get-app-link:hover {
+  color: #f28500;
+  text-decoration: underline;
+}
+.hint {
+  margin: 8px 0 0;
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.35;
+}
+code {
+  background: #f1f5f9;
+  padding: 0 4px;
+  border-radius: 4px;
+}

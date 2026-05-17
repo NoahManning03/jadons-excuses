@@ -1,0 +1,86 @@
+[package]
+name = "jadons-excuses"
+version = "0.1.0"
+description = "Receipts for where your time actually went."
+authors = ["Jadon"]
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "jadons_excuses_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.6.0", features = [] }
+
+[dependencies]
+tauri = { version = "2.11.0", features = ["tray-icon", "image-png"] }
+tauri-plugin-sql = { version = "2.4.0", features = ["sqlite"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+sqlx = { version = "0.8", default-features = false, features = ["sqlite", "runtime-tokio"] }
+# `tokio` was previously feature-gated to just `sync` because the only consumer
+# was the migration scaffolding. Step 3 (window tracker) needs `time::sleep`,
+# `task::spawn`, and a multi-threaded runtime, so we promote it to "full".
+tokio = { version = "1", features = ["full"] }
+chrono = { version = "0.4", default-features = false, features = ["clock", "serde"] }
+# Foreground-window probing across macOS/Windows/Linux. 0.10.1 is the latest
+# stable on crates.io as of 2026-04-19 (verified). On macOS it links against
+# AppKit + CoreGraphics + objc; window titles require Screen Recording
+# permission (not Accessibility) — see notes in tracker/window.rs.
+active-win-pos-rs = "0.10.1"
+# Global input *state* querier for the engagement engine (Step 4).
+#
+# History: this slot used to be `rdev = "0.5.3"`. rdev was last released
+# 2023-06-26 and stopped capturing keyboard events on recent macOS builds
+# (Sonoma/Sequoia tightened the keystroke-event TCC bucket and rdev never
+# shipped a fix). We verified the regression empirically: across 123
+# engagement_samples on this dev machine, mouse clicks/scrolls/movement
+# all populated correctly but `MAX(key_presses) = 0`. Swapped to
+# device_query, which is actively maintained.
+#
+# device_query is *polling*-based, not event-driven: every poll you call
+# `state.get_keys()` and `state.get_mouse()` to read the current set of
+# pressed keys / mouse buttons / cursor position. We diff successive polls
+# to derive transitions (new keys / new clicks / pixel deltas) — that's
+# what feeds EngagementEvent values into the existing crossbeam channel,
+# leaving the async sampler downstream untouched.
+#
+# Notes:
+#   * macOS: device_query's keyboard path goes through CGEventSource +
+#     `readkey`. Apple gates that surface behind the **Accessibility**
+#     TCC bucket on Mojave+ — NOT Input Monitoring. The active-win-pos-rs
+#     crate already requires Accessibility, so the TCC grant the user
+#     gave for window tracking also covers device_query's key reads.
+#     (We keep the legacy "Request Input Monitoring" UI button anyway —
+#     the right call for the user is to grant *both* TCC buckets, which
+#     they almost certainly already have for the window tracker.)
+#   * Linux: requires libx11-dev at build time and X11 at runtime.
+#     Wayland is *not* supported (same caveat as rdev).
+#   * Windows: uses GetKeyState / GetCursorPos — no special permissions.
+# Verified: 4.0.1 is the latest stable on crates.io as of 2026-05-08
+# (released 2025-07-21, actively maintained).
+device_query = "4.0.1"
+# Lock-free MPMC channel used to ferry input events from the polling
+# std::thread to the async sampler task without blocking either side. 0.5
+# is the current major; latest patch is 0.5.15 (2025-04-08, verified
+# 2026-05-08). Was originally added for the rdev callback (which couldn't
+# block on the CGEventTap thread); device_query polling on a dedicated
+# thread doesn't strictly need lock-free, but we keep crossbeam for
+# parity with the existing sampler interface.
+crossbeam-channel = "0.5"
+tokio-tungstenite = "0.26"
+futures-util = "0.3"
+
+[target."cfg(not(any(target_os = \"android\", target_os = \"ios\")))".dependencies]
+tauri-plugin-global-shortcut = "2.3.1"
+tauri-plugin-notification = "2.3.3"
+tauri-plugin-deep-link = "2.4.9"
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+incremental = false
+opt-level = "s"
+strip = true

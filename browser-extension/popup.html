@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jadon's Excuses</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <span class="dot" id="status-dot" aria-hidden="true"></span>
+        <div>
+          <div class="title">Jadon's Excuses</div>
+          <div class="subtitle">Tab bridge</div>
+        </div>
+      </div>
+      <p id="connection-status" class="connection-status" role="status"></p>
+    </header>
+    <main>
+      <section>
+        <h2>Today's top domains</h2>
+        <div id="domains"></div>
+      </section>
+      <section>
+        <label class="row">
+          <input type="checkbox" id="pause" />
+          <span>Pause tracking</span>
+        </label>
+      </section>
+    </main>
+    <footer>
+      <button id="open-app" type="button" class="btn-primary">
+        Open Jadon's Excuses
+      </button>
+      <p class="disclaimer">
+        Requires the Jadon's Excuses desktop app for macOS.
+      </p>
+      <p class="get-app-wrap">
+        <a
+          id="get-app-link"
+          class="get-app-link"
+          href="https://chrome.google.com/webstore"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Get the desktop app →</a
+        >
+      </p>
+      <p class="hint">
+        This extension only talks to <code>ws://127.0.0.1:9876</code> on your
+        machine while the desktop app is running.
+      </p>
+    </footer>
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Jadon's Excuses",
+  "version": "0.1.0",
+  "identifier": "com.jadon.excuses",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Jadon's Excuses",
+        "width": 1200,
+        "height": 800,
+        "minWidth": 960,
+        "minHeight": 640,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "plugins": {
+    "sql": {
+      "preload": ["sqlite:jadons-excuses.db"]
+    },
+    "deep-link": {
+      "desktop": {
+        "schemes": ["jadons-excuses"]
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["dmg", "msi"],
+    "category": "Productivity",
+    "shortDescription": "Receipts for where your time actually went.",
+    "longDescription": "Jadon's Excuses is a local-first time-tracking companion that turns your daily window and browser activity into honest, useful receipts.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "macOS": {
+      "frameworks": [],
+      "bundleVersion": "1.0.0",
+      "minimumSystemVersion": "11.0",
+      "exceptionDomain": "",
+      "signingIdentity": "Developer ID Application: Noah Manning (8K85QBRB52)",
+      "providerShortName": "8K85QBRB52",
+      "entitlements": null,
+      "infoPlist": "Info.plist"
+    },
+    "windows": {
+      "wix": {
+        "language": ["en-US"]
+      }
+    }
+  }
+}
