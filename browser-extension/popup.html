@@ -33,22 +33,26 @@
       <button id="open-app" type="button" class="btn-primary">
         Open Jadon's Excuses
       </button>
-      <p class="disclaimer">
-        Requires the Jadon's Excuses desktop app for macOS.
-      </p>
-      <p class="get-app-wrap">
+
+      <div id="download-cta" class="download-cta">
+        <div class="download-cta-icon">JE</div>
+        <p class="download-cta-heading">Get the desktop app</p>
+        <p class="download-cta-sub">
+          Jadon's Excuses tracks your focus, not just your tabs. The desktop app
+          is required.
+        </p>
         <a
-          id="get-app-link"
-          class="get-app-link"
-          href="https://chrome.google.com/webstore"
+          class="btn-download"
+          href="https://github.com/NoahManning03/jadons-excuses/releases/download/v1.0.0/JadonsExcuses-v1.0.dmg"
           target="_blank"
           rel="noopener noreferrer"
-          >Get the desktop app →</a
-        >
-      </p>
+          >⬇ Download for macOS — Free</a>
+        <p class="download-meta">macOS · 3.8 MB · Notarized by Apple</p>
+      </div>
+
       <p class="hint">
-        This extension only talks to <code>ws://127.0.0.1:9876</code> on your
-        machine while the desktop app is running.
+        Connects to <code>ws://127.0.0.1:9876</code> while the desktop app is
+        running.
       </p>
     </footer>
     <script src="popup.js"></script>

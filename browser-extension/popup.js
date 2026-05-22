@@ -10,18 +10,48 @@ function setDot(ok) {
   el.style.background = ok ? "#10B981" : "#94A3B8";
 }
 
+function getDownloadInfo() {
+  const ua = navigator.userAgent;
+  if (/Windows/i.test(ua)) {
+    return {
+      url: "https://github.com/NoahManning03/jadons-excuses/releases/download/v1.0.0/JadonsExcuses-v1.0.msi",
+      label: "⬇ Download for Windows — Free",
+      meta: "Windows 10/11 · MSI installer"
+    };
+  }
+  return {
+    url: "https://github.com/NoahManning03/jadons-excuses/releases/download/v1.0.0/JadonsExcuses-v1.0.dmg",
+    label: "⬇ Download for macOS — Free",
+    meta: "macOS · 3.8 MB · Notarized by Apple"
+  };
+}
+
 function setConnectionStatus(connected) {
   const el = document.getElementById("connection-status");
-  if (!el) return;
-  if (connected) {
-    el.textContent = "🟢 Connected to Jadon's Excuses";
-    el.classList.remove("connection-status--warn");
-    el.classList.add("connection-status--ok");
-  } else {
-    el.textContent = "🟡 Open the Jadon's Excuses app to start tracking";
-    el.classList.remove("connection-status--ok");
-    el.classList.add("connection-status--warn");
+  if (el) {
+    if (connected) {
+      el.textContent = "🟢 Connected to Jadon's Excuses";
+      el.classList.remove("connection-status--warn");
+      el.classList.add("connection-status--ok");
+    } else {
+      el.textContent = "🟡 Open the Jadon's Excuses app to start tracking";
+      el.classList.remove("connection-status--ok");
+      el.classList.add("connection-status--warn");
+    }
   }
+
+  const openApp = document.getElementById("open-app");
+  const downloadCta = document.getElementById("download-cta");
+  if (openApp) openApp.style.display = connected ? "block" : "none";
+  if (downloadCta) downloadCta.style.display = connected ? "none" : "flex";
+  if (!connected) {
+    const info = getDownloadInfo();
+    const link = document.querySelector(".btn-download");
+    const meta = document.querySelector(".download-meta");
+    if (link) { link.href = info.url; link.textContent = info.label; }
+    if (meta) meta.textContent = info.meta;
+  }
+  document.body.classList.toggle("body--disconnected", !connected);
 }
 
 async function readBridgeConnected() {
