@@ -14,13 +14,13 @@ function getDownloadInfo() {
   const ua = navigator.userAgent;
   if (/Windows/i.test(ua)) {
     return {
-      url: "https://github.com/NoahManning03/jadons-excuses/releases/download/v1.0.0/JadonsExcuses-v1.0.msi",
+      url: "https://github.com/NoahManning03/jadons-excuses/releases/download/v1.0.2/Jadon.s.Excuses_0.1.0_x64_en-US.msi",
       label: "⬇ Download for Windows — Free",
       meta: "Windows 10/11 · MSI installer"
     };
   }
   return {
-    url: "https://github.com/NoahManning03/jadons-excuses/releases/download/v1.0.0/JadonsExcuses-v1.0.dmg",
+    url: "https://github.com/NoahManning03/jadons-excuses/releases/download/v1.0.2/Jadon.s.Excuses_0.1.0_aarch64.dmg",
     label: "⬇ Download for macOS — Free",
     meta: "macOS · 3.8 MB · Notarized by Apple"
   };
